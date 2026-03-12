@@ -1,0 +1,47 @@
+﻿@model ICollection<UploadLink>
+
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="m-3">
+    <h4 align="center">Danh sách link nộp bài thi trong ngày</h4>
+</div>
+
+<table class="table table-striped ">
+    <thead class="thead-light">
+        <tr>
+            <th>Học phần</th>
+
+            <th>Thời gian nộp bài</th>
+            <th>Link nộp bài</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+                <td>
+                    @item.TimeOpen.ToString("dd/MM/yyyyy hh:mm tt")
+                    <i data-feather="arrow-right"></i>
+                    @item.TimeClose.ToString("dd/MM/yyyyy hh:mm tt")
+                </td>
+                <td align="center">
+                    <a asp-action="Login" asp-controller="UploadTests" asp-route-id="@item.Id">
+                        <i data-feather="link"></i>
+                    </a>
+                    @if (User != null && User.IsInRole(Constants.RoleTeacher))
+                    {
+                          <a asp-action="Details" asp-controller="UploadLinks" asp-route-id="@item.Id" class="ml-3">
+                            <i data-feather="eye"></i>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

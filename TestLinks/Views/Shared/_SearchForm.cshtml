@@ -1,0 +1,55 @@
+﻿
+@{
+    string SearchString = null;
+    string filter = null;
+    
+   
+    Model.Filters.TryGetValue("searchString", out SearchString);
+    Model.Filters.TryGetValue("filter", out filter);
+
+}
+    <form asp-action="Index" class="p-sm" method="get">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    @foreach (KeyValuePair<string, string> kv in Model.Filters)
+                    {
+                        if (kv.Key != "searchString" && kv.Key != "reviewStatus")
+                        {
+                            <input name="@kv.Key" value="@kv.Value"
+                                   type="hidden">
+                        }
+                    }
+
+                    <input name="SearchString" value="@SearchString"
+                           type="text" class="form-control" placeholder="Nhập từ khóa...">
+
+                    <span>
+                        @if (ViewBag.ReviewFilter != null)
+                        {
+                            //string reviewStatus;
+
+                            //Model.Filters.TryGetValue("reviewStatus", out reviewStatus);
+
+                            //var items = new List<SelectListItem>(
+                            //    Html.GetEnumSelectList<ReviewStatus>());
+                            //items.Insert(0, new SelectListItem()
+                            //{
+                            //    Text = "Tất cả",
+                            //    Value = null,
+                            //});
+
+                            @*<select asp-for="@reviewStatus" name="reviewStatus" class="form-control selectpicker"
+                                    asp-items="@items"></select>*@
+                        }
+                        <button type="submit" class="btn btn-outline-primary ml-3">
+                            Tìm
+                        </button>
+
+                    </span>
+
+                </div>
+            </div>
+           
+        </div>
+    </form>

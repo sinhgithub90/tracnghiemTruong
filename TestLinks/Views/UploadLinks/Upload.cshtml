@@ -1,0 +1,19 @@
+﻿<h1>Upload Links</h1>
+<span><a href="/links_mau.xlsx">Tải file mẫu</a></span>
+
+<div class="container">
+    <form asp-action="Upload" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <label for="year">Năm học</label>
+            <input required name="year" id="year" class="form-control number" />
+        </div>
+        <div class="form-group">
+            <label for="term">Học kì</label>
+            <input required name="term" id="term" class="form-control number" />
+        </div>
+        <div class="form-group">
+            <input type="file" name="file" />
+        </div>>
+        <button type="submit">Upload Links</button>
+    </form>
+</div>

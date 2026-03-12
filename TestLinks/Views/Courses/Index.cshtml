@@ -1,0 +1,63 @@
+﻿@model PaginatedViewModel<TestLinks.Models.Course>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Học phần</h1>
+
+<p>
+  @*  <a asp-controller="UploadLinks" asp-action="Index" class="mr-3">
+        <i data-feather="arrow-left"></i>
+    </a> *@
+    <a asp-action="Create">Thêm mới</a>
+</p>
+<div class="panel mb-3">
+    <partial name="_SearchForm" model="Model" />
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].DepartmentId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var vm = new TestLinks.Models.PaginatedNavigatorViewModel()
+    {
+        Filters = Model.Filters,
+        PaginatedList = Model.Items
+    };
+}
+<partial name="_PartialPagination" model="@vm" />

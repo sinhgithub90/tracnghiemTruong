@@ -1,0 +1,54 @@
+﻿@model TestUploadInfo
+
+@{
+}
+
+<div>
+    <p>
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(e => Model.StudentId)</dt>
+            <dd class="col-sm-9">@Html.ValueFor(e => Model.StudentId)</dd>
+            <dt class="col-sm-3">@Html.DisplayNameFor(e => Model.FileCount)</dt>
+            <dd class="col-sm-9">@Html.ValueFor(e => Model.FileCount)</dd>
+        </dl>
+    </p>
+</div>
+
+<div>
+    <table class="table table-stripped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Tên file</th>
+                <th>Kích thước</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Files)
+            {
+                var type = item.Ext.EndsWith("pdf") ? "pdf" : "image";
+                <tr>
+                    <td>@Html.DisplayFor(e => item.FileName)</td>
+                    <td>@Html.DisplayFor(e => item.Kb) Kb</td>
+                    <td>
+                        <a asp-action="DownloadSubmit" asp-route-id="@item.Id">
+                            <i data-feature="download"></i> Tải về
+                        </a>
+                        <button class="btn" onclick="showModal('@item.FileName', '/UploadLinks/GetFile/@item.Id', '@type')">
+                           
+                            <i class="" data-feather="eye"></i>
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <p>
+            <a asp-action="Details" asp-route-id="@Model.LinkId"><i data-feather="arrow-left"></i> Quay lại trang trước</a>
+        </p>
+    </div>
+</div>
+
+<partial name="_DocViewer" />

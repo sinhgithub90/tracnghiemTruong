@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Upload Links</h1>
+<span><a href="/links_mau.xlsx">Tải file mẫu</a></span>
+
+<div class="container">
+    <form asp-action="Upload" enctype="multipart/form-data" method="post">
+        <input type="file" name="file" />
+        <button type="submit" >Upload Links</button>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+﻿@model TestLinks.Models.VM.QuizAnswerUploadViewModel
+
+@{
+    var files = Model.Files;
+    var count = 0;
+}
+
+<div class="container">
+    <h4 align="center">Kết quả nộp bài môn thi @Model.UploadLink.Course.Name</h4>
+    <h6 align="center" class="text-muted">Học kì @Model.UploadLink.CourseTerm, năm học @Model.UploadLink.CourseYear</h6>
+
+</div>
+
+
+
+<table class="table table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>STT</th>
+            <th>Danh sách file nộp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in files)
+        {
+            count++;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @file.FileName
+                </td>
+            </tr>
+         }
+
+    </tbody>
+</table>

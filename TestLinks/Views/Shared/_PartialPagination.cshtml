@@ -1,0 +1,85 @@
+﻿@model PaginatedNavigatorViewModel
+
+@{
+    var prevDisabled = !Model.PaginatedList.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.PaginatedList.HasNextPage ? "disabled" : "";
+}
+
+@if (@Model.PaginatedList.TotalPage > 1)
+{
+    int displaySize = 3;
+    var totalPage = Model.PaginatedList.TotalPage;
+    int offset = (Model.PaginatedList.PageIndex / displaySize) * displaySize;
+    if (offset + displaySize > totalPage)
+    {
+        offset = totalPage - displaySize;
+    }
+    if (offset <= 0) {
+        offset = 1;
+    }
+    int lastOffset = Math.Min(offset + displaySize, Model.PaginatedList.TotalPage);
+
+<div align="center" class="justify-content-center">
+    <div>
+        <span class="text-muted text-sm-center">Trang @Model.PaginatedList.PageIndex / @Model.PaginatedList.TotalPage (@Model.PaginatedList.TotalCount dòng)</span>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            @if (offset > 1)
+            {
+                var prev = Math.Max(1, offset - displaySize);
+                <li class="page-item">
+                    <a asp-action="Index" class="page-link"
+                       asp-all-route-data="@Model.Filters"
+                       asp-route-pageIndex="1">
+                        Đầu
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Index" class="page-link"
+                       asp-all-route-data="@Model.Filters"
+                       asp-route-pageIndex="@prev">
+                        &#8592;
+                    </a>
+                </li>
+            }
+
+
+            @for (int i = offset; i <= lastOffset; i++)
+            {
+                var active = i == Model.PaginatedList.PageIndex ? "active" : "";
+                <li class="page-item @active">
+                    <a asp-action="Index" class="page-link"
+                       asp-all-route-data="@Model.Filters"
+                       asp-route-pageIndex="@i">
+                        @(i)
+                    </a>
+                </li>
+            }
+            @if (lastOffset < Model.PaginatedList.TotalPage)
+            {
+                var next = Math.Min(Model.PaginatedList.TotalPage, lastOffset + displaySize);
+
+                <li class="page-item">
+                    <a asp-action="Index" class="page-link"
+                       asp-all-route-data="@Model.Filters"
+                       asp-route-pageIndex="@next">
+                        &#8594;
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Index" class="page-link"
+                       asp-all-route-data="@Model.Filters"
+                       asp-route-pageIndex="@Model.PaginatedList.TotalPage">
+                        Cuối
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+</div>
+
+}
+
+

@@ -1,0 +1,140 @@
+﻿@model TestLinks.Models.VM.QuizAnswerUploadViewModel
+
+@{
+    ViewData["Title"] = "Nộp bài";
+    var files = Model.Files;
+    var remainCount = Math.Max(0, Model.UploadLink.MaxFiles - files.Count);
+
+    var parms = new Dictionary<string, string>
+    {
+                { "linkId", Model.LinkId.ToString() },
+                { "studentId", Model.StudentId },
+                { "verifyToken", Model.Token },
+     };
+    var allowTypes = Model.UploadLink.FileTypes;
+    var normalizeAllowTypes = String.Join(",", allowTypes);
+}
+
+<div class="container">
+    <div class="alert alert-info " role="alert">
+        <div align="center">
+            <h5>
+                <i data-feather="alert-circle"></i> Thông tin
+            </h5>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <dl class="row">
+                    <dt class="col-sm-3">Môn thi:</dt>
+                    <dd class="col-sm-9"> @Model.UploadLink.Course.Name</dd>
+                    <dt class="col-sm-3">Học kì:</dt>
+                    <dd class="col-sm-9">@Model.UploadLink.CourseTerm, năm học @Model.UploadLink.CourseYear</dd>
+                </dl>
+            </div>
+            <div class="col-lg-6">
+                <dl class="row">
+                    <dt class="col-sm-6">Kích thước tối đa mỗi tệp:</dt>
+                    <dd class="col-sm-6">@Model.UploadLink.MaxFileSize Mb</dd>
+                    <dt class="col-sm-6">Hạn nộp bài: </dt>
+                    <dd class="col-sm-6">@Model.UploadLink.TimeClose.ToString("dd/MM/yyyy HH:mm")</dd>
+                </dl>
+            </div>
+        </div>
+
+
+
+    </div>
+    @if (files.Count > 0)
+    {
+        <div class="alert alert-success " role="alert">
+            <h5>Danh sách bài thi upload thành công</h5>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    @foreach (var file in files)
+                    {
+                        var fileName = $"{file.Name}{file.Ext}";
+                        var queryParams = $"id={file.Id}&&linkId={Model.LinkId}&&studentId={Model.StudentId}&&verifyToken={Model.Token}";
+                        var downloadLink = $"/UploadTests/Downloads?{queryParams}";
+                        var removeLink = $"/UploadTests/Remove?{queryParams}";
+                        var routeParams = new Dictionary<string, string>
+                {
+                { "linkId", Model.LinkId.ToString() },
+                { "studentId", Model.StudentId },
+                { "verifyToken", Model.Token },
+                { "id", file.Id.ToString() },
+                };
+                        <tr>
+                            <td class="text-wrap" style="max-width: 100%">
+                                @*<i class="ml-3 text-success">
+                                    <i data-feather="check-circle"></i>
+                                    </i>*@
+                                @fileName  <span class="badge badge-info">@Html.DisplayFor(e => file.Kb) Kb</span>
+
+                                <a data-toggle="tooltip" title="Xóa file" class="float-right ml-3 text-danger"
+                           asp-action="Remove" asp-all-route-data="routeParams">
+                                    <i data-feather="x"></i> Hủy file
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+           Bạn chưa upload file bài thi. Hãy chọn file upload bằng cách bấm vào <img src="/images/step_01.png" height="40" /> và bấm vào 
+           nút <img src="/images/step_02.png" height="40"/> để upload bài thi.
+        </div>
+    }
+
+
+   @* @if (Model.UploadLink.QuizFiles.Count > 0)
+    {
+        <h5>Đề thi</h5>
+        <hr />
+        @foreach (var item in Model.UploadLink.QuizFiles)
+        {
+            var routeParams = new Dictionary<string, string>
+    {
+    {"id", item.Id},
+    { "linkId", Model.LinkId.ToString() },
+    { "studentId", Model.StudentId },
+    { "verifyToken", Model.Token },
+    };
+            <a asp-action="Download" asp-all-route-data="routeParams">
+                @item.FileName
+            </a>
+        }
+    }*@
+</div>
+
+<form asp-action="Upload" asp-all-route-data="parms" enctype="multipart/form-data">
+    <table class="table table-sm">
+        <tbody>
+            @if (remainCount > 0)
+            {
+                for (int i = 0; i < remainCount; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="file" name="files" accept="@normalizeAllowTypes" />
+                        </td>
+
+                        <td></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @if (remainCount > 0)
+    {
+        <div align="center">
+            <button type="submit" class="btn btn-primary">
+                Nộp bài
+            </button>
+        </div>
+    }
+</form>

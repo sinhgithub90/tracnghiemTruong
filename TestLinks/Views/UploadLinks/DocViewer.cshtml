@@ -1,0 +1,36 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="viewer-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewer-modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="viewer">
+        ...
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function showModal(name, url, type)
+    {
+        var content;
+        if(type === 'image')
+        {
+            content = '<img style="width: 100%;" src="' + url + '"' + ' />'
+        } 
+        else if(type === 'pdf')
+        {
+            // width: 100%;
+    
+            content = '<iframe style="width: 100%; height: 80vh;" src="' + url + '" ></iframe>'
+        }
+        $('#viewer-modal-title').html(name);
+        $('#viewer').html(content);
+        $('#viewer-modal').modal({});
+    }
+</script>

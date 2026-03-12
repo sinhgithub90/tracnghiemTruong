@@ -1,0 +1,97 @@
+﻿@model TestLinks.Models.UploadLink
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cập nhật</h1>
+<h4>Link Upload</h4>
+<hr />
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="CourseId" class="control-label"></label>
+                <select asp-for="CourseId" class="form-control" asp-items="@ViewBag.CourseId"></select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="CourseYear" class="control-label"></label>
+            <input asp-for="CourseYear" class="form-control" />
+            <span asp-validation-for="CourseYear" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="CourseTerm" class="control-label"></label>
+            <input asp-for="CourseTerm" class="form-control" />
+            <span asp-validation-for="CourseTerm" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <h6>Thời hạn nộp bài</h6>
+            <hr />
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="TimeOpen" class="control-label"></label>
+            <input asp-for="TimeOpen" class="form-control" />
+            <span asp-validation-for="TimeOpen" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="TimeClose" class="control-label"></label>
+            <input asp-for="TimeClose" class="form-control" />
+            <span asp-validation-for="TimeClose" class="text-danger"></span>
+        </div>
+
+        
+        <div class="form-group col-md-6">
+            <label asp-for="Room" class="control-label"></label>
+            <input asp-for="Room" class="form-control" />
+            <span asp-validation-for="Room" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <h6>Quy định file nộp</h6>
+            <hr />
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="MaxFileSize" class="control-label"></label>
+            <input asp-for="MaxFileSize" class="form-control" />
+            <span asp-validation-for="MaxFileSize" class="text-danger"></span>
+        </div>
+        <div class="form-group  col-md-4">
+            <label asp-for="MaxFiles" class="control-label"></label>
+            <input asp-for="MaxFiles" class="form-control" />
+            <span asp-validation-for="MaxFiles" class="text-danger"></span>
+        </div>
+        <div class="form-group  col-md-4">
+            <label asp-for="AlllowFileTypes" class="control-label"></label>
+            <input asp-for="AlllowFileTypes" class="form-control" />
+            <span asp-validation-for="AlllowFileTypes" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <div class="form-group">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

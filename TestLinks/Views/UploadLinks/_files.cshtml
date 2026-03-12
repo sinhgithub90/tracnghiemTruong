@@ -1,0 +1,31 @@
+﻿@model TestLinks.Models.UploadLink
+
+<table class="table table-dark" >
+    <thead>
+        <tr>
+            <th>File</th>
+            <th>Size</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in Model.QuizFiles)
+        {
+            var fileName = $"{file.Name}{file.Ext}";
+            var url = $"/UploadLinks/Details/{Model.Id}";
+            <tr>
+                <td>@fileName</td>
+                <td>@file.Mb Mb</td>
+                <td>
+                    <a asp-action="Download" asp-route-id="@file.Id">
+                        <i data-feather="download"></i>
+                    </a>
+                    <a asp-action="Remove" asp-route-id="@file.Id" asp-route-url="@url" class="ml-3 text-danger">
+                        <i data-feather="delete"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

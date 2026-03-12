@@ -1,0 +1,27 @@
+﻿@{
+}
+
+<div>
+    <h2>Tải danh sách link</h2>
+    <form asp-action="ExportLink">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="year" class="control-label">Năm học:</label>
+                    <input class="form-control" type="number" name ="year" value="@DateTime.Today.Year" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="year" class="control-label">Học kì:</label>
+                    <input class="form-control" name="term" type="number" value="1" />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="submit" value="Tải về" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,33 @@
+# Build output
+**/bin/
+**/obj/
+
+# IDE/editor settings
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific publish and local service dependency files
+**/Properties/PublishProfiles/*.pubxml
+**/Properties/PublishProfiles/*.pubxml.user
+**/Properties/serviceDependencies.local.json
+**/Properties/serviceDependencies.local.json.user
+
+# Runtime logs
+*.log
+TestLinks/log.txt
+
+# Local/sensitive config
+TestLinks/appsettings.json
+TestLinks/appsettings.Development.json
+
+# Backup artifacts
+*.bak
+
+# OS-specific noise
+Thumbs.db
+.DS_Store

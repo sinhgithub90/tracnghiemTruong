@@ -1,0 +1,133 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@model UploadLink
+@inject UserManager<ApplicationUser> userManager
+@{
+
+    var user = await userManager.GetUserAsync(User);
+}
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h4 class="m-3" align="center">
+                                <i data-feather="alert-circle" class="text-success"></i> Thông tin nộp bài
+                            </h4>
+                            <dl class="row m-3">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.CourseId):
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(model => model.Course.Name)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(model => model.CourseYear):
+                                </dt>
+                                <dd class="col-sm-8">
+                                    Học kì  @Html.DisplayFor(model => model.CourseTerm) /
+                                    @Html.DisplayFor(model => model.CourseYear)
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Bắt đầu nộp:
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Model.TimeOpen.ToString("dd/MM/yyyy hh:mm tt")
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Kết thúc:
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Model.TimeClose.ToString("dd/MM/yyyy hh:mm tt")
+                                </dd>
+                            </dl>
+                            @if (!Model.Available)
+                            {
+                                <div class="alert alert-warning ml-4">
+                                    Môn thi <strong>@Model.Course.Name </strong> hoặc <span class="text-danger font-weight-bold">chưa đến thời hạn nộp bài</span>,
+                                    hoặc <span class="text-danger font-weight-bold">hết thời hạn nộp bài</span>.
+                                </div>
+                            }
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
+                                </div>
+                                <form class="user" asp-action="Login" asp-route-id="@Model.Id">
+                                    <div class="form-group">
+                                       @* <input type="number" class="form-control form-control-user"
+                                               name="studentId"
+                                               min="100000000"
+                                               max="9999999999"
+                                               maxlength="10"
+                                               value="@user.MSSV"
+                                               readonly
+                                               required
+                                               placeholder="Mã số sinh viên...">*@
+                                           <input class="form-control form-control-user"
+                                               name="studentId"
+                                               maxlength="15"
+                                               value="@user.MSSV"
+                                               readonly
+                                               required
+                                               placeholder="Mã số sinh viên...">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user"
+                                               name="password"
+                                               required
+                                               placeholder="Mật khẩu phòng thi">
+                                    </div>
+
+                                   @* <div class="g-recaptcha"
+                                         data-sitekey="6LflGwAeAAAAABiVHozLkJk8KtXkBEToAMlULvwo"
+                                         data-callback="enableBtn"></div>
+                                    <br />*@
+                                    @{
+                                        var isDisable = !Model.Available;
+                                    }
+                                    <button type="submit" class="btn btn-primary btn-user btn-block"
+                                            id="submit_details"
+                                            disabled="@isDisable">
+                                        Đăng nhập
+                                    </button>
+
+                                </form>
+                                <hr>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+@{
+    bool available = Model.Available;
+}
+@section Scripts
+{
+@*<script src="https://www.google.com/recaptcha/api.js?hl=vi" async defer></script>
+<script>
+    var available = @available.ToString().ToLower();
+   
+    function enableBtn(){
+        if(available)
+        {
+            document.getElementById("submit_details").disabled = false;
+        }
+    }
+</script>*@
+}
